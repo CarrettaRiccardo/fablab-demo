@@ -7,20 +7,27 @@ export default function FormNew({}) {
   const [message, formAction, isPending] = useActionState(actionNewTodo, null);
 
   return (
-    <form action={formAction}>
-      <input name="title" placeholder="Todo" className="border-2 p-2 bg-gray-50" />
-      <button
-        disabled={isPending}
-        type="submit"
-        className="border-2 bg-cyan-400 p-2"
-      >
-        Add
-      </button>
+    <form action={formAction} className="flex gap-2 w-full">
+      <input
+        name="title"
+        placeholder="Todo"
+        className="border-2 bg-gray-50 w-full"
+      />
 
-      <div className="w-full mt-2">
-        {isPending
-          ? "Loading..."
-          : message && <p className="font-bold mt-4">{message}</p>}
+      <div>
+        <button
+          disabled={isPending}
+          type="submit"
+          className="border-2 bg-cyan-400 p-2"
+        >
+          Add
+        </button>
+
+        <div>
+          {isPending
+            ? "Loading..."
+            : message && <p className="font-bold mt-4">{message}</p>}
+        </div>
       </div>
     </form>
   );

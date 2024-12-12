@@ -1,3 +1,7 @@
-export default function CenterScreen({ children }) {
-  return <div className="grid place-items-center h-screen">{children}</div>;
+export default function CenterScreen({ children, className }) {
+  return (
+    <div className={"grid place-items-center h-screen " + className}>
+      {children}
+    </div>
+  );
 }
