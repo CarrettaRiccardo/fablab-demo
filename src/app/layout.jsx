@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import "./globals.css";
 
 export const metadata = {
@@ -9,7 +10,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        {children}
+        <Header />
+
+        <main className="pt-12">{children}</main>
       </body>
     </html>
   );
