@@ -4,6 +4,7 @@ import { Database } from "@/lib/database";
 
 export const revalidate = false;
 export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const data = await Database.list();

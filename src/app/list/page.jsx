@@ -2,6 +2,7 @@ import ButtonDelete from "@/components/button-delete";
 import CenterScreen from "@/components/center-screen";
 import FormConfig from "@/components/form-config";
 import FormNew from "@/components/form-new";
+import FormUpdate from "@/components/form-update";
 import { Database } from "@/lib/database";
 import Link from "next/link";
 
@@ -27,8 +28,17 @@ export default async function Page() {
               {item.id} - {item.title}
             </p>
             <div className="flex justify-between items-center mb-2">
+              <FormUpdate item={item} />
+
               <ButtonDelete id={item.id} />
+
               <div className="flex space-x-2">
+                <Link
+                  href={`/ssg/${item.id}`}
+                  className="text-blue-500 hover:text-blue-700"
+                >
+                  SSG
+                </Link>
                 <Link
                   href={`/isr/${item.id}`}
                   className="text-blue-500 hover:text-blue-700"
