@@ -1,5 +1,18 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## ⚠️ Notes
+
+The fake database is `in-memory`:
+
+- In local development, the fake database is shared between apis and pages.
+- In production, the fake database is separate between apis and pages.
+
+This results in `CSR` always working correctly in development.
+
+`SSR` and `ISR` only work as expected in production, as stated in docs: `"In Development, Pages are always rendered on-demand and are never cached. This allows you to see changes immediately without waiting for a revalidation period to pass."`
+
+https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#revalidate
+
 ## Getting Started
 
 First, run the development server:

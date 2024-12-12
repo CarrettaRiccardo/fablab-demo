@@ -1,5 +1,22 @@
 
 export const dbService = async () => {
+    // config in fake db
+    if (!global.config) {
+        // save config instance in global object for reuse
+        global.config = { revalidateISRandSSR: false };
+    }
+    const config = global.config;
+
+    function getConfig() {
+        return config;
+    }
+
+    function setConfig(payload) {
+        global.config = { ...config, ...payload };
+    }
+    // ----------------------------------------------------------
+
+    // data in fake db
     if (!global.data) {
         // save data instance in global object for reuse
         global.data = [
@@ -9,6 +26,7 @@ export const dbService = async () => {
         ];
     }
     const data = await new Promise((resolve) => {
+        // fake retrieval time
         setTimeout(() => {
             resolve(global.data);
         }, 500);
@@ -49,6 +67,8 @@ export const dbService = async () => {
     }
 
     return {
+        getConfig,
+        setConfig,
         get,
         list,
         update,

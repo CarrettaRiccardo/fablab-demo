@@ -1,8 +1,29 @@
 "use server"
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { Database } from "./database";
+
+export async function actionSetConfig(prevState, formData) {
+    const config = {
+        revalidateISRandSSR: formData.get("revalidateISRandSSR") === "on",
+    };
+
+    // mutate data
+    await Database.setConfig(config);
+
+    revalidatePath(`/list`)
+}
+
+export async function actionGetTodo(formData) {
+    const id = formData.get("id");
+
+    // read data
+    const data = await Database.get(id);
+
+    return data;
+}
+
+// ----------------------------------------------------------
 
 export async function actionNewTodo(prevState, formData) {
     const title = formData.get("title");
@@ -10,9 +31,15 @@ export async function actionNewTodo(prevState, formData) {
     // mutate data
     const newId = await Database.create({ title });
 
-    // revalidate cache
+    // revalidate cache (if config)
+    const config = await Database.getConfig();
+    if (config.revalidateISRandSSR) {
+        revalidatePath(`/isr/${newId}`)
+        revalidatePath(`/ssr/${newId}`)
+    }
     revalidatePath(`/list`)
-    redirect(`/ssr/${newId}`)
+
+    // redirect(`/ssr/${newId}`)
 }
 
 export async function actionUpdateTodo(prevState, formData) {
@@ -22,9 +49,12 @@ export async function actionUpdateTodo(prevState, formData) {
     // mutate data
     await Database.update(id, { title });
 
-    // revalidate cache
-    // revalidatePath(`/isr/${id}`)
-    // revalidatePath(`/ssr/${id}`)
+    // revalidate cache (if config)
+    const config = await Database.getConfig();
+    if (config.revalidateISRandSSR) {
+        revalidatePath(`/isr/${id}`)
+        revalidatePath(`/ssr/${id}`)
+    }
 }
 
 export async function actionDeleteTodo(prevState, formData) {
@@ -33,8 +63,11 @@ export async function actionDeleteTodo(prevState, formData) {
     // mutate data
     await Database.remove(id);
 
-    // revalidate cache
-    revalidatePath(`/isr/${id}`)
-    revalidatePath(`/ssr/${id}`)
-    redirect("/list")
+    // revalidate cache (if config)
+    const config = await Database.getConfig();
+    if (config.revalidateISRandSSR) {
+        revalidatePath(`/isr/${id}`)
+        revalidatePath(`/ssr/${id}`)
+    }
+    revalidatePath(`/list`)
 }

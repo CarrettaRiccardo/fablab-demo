@@ -1,6 +1,13 @@
 import { dbService } from "@/lib/data";
 
 export const Database = {
+    getConfig: async function () {
+        return (await dbService()).getConfig();
+    },
+    setConfig: async function (payload) {
+        return (await dbService()).setConfig(payload);
+    },
+    // ----------------------------------------------------------
     get: async function (id) {
         const data = await dbService();
 

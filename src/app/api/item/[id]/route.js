@@ -1,13 +1,13 @@
-import { Database } from "@/lib/database";
+import { actionGetTodo } from "@/lib/actions";
 import { NextResponse } from "next/server";
-
-export const revalidate = 0
-export const dynamic = "force-dynamic"
 
 export async function GET(request, { params }) {
     const { id } = await params;
 
-    const item = await Database.get(id);
+    const form = new FormData()
+    form.set("id", id)
+    const item = await actionGetTodo(form);
+    // const item = await Database.get(id);
 
     if (!item) {
         return NextResponse.json({}, {
