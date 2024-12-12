@@ -25,6 +25,13 @@ export async function actionGetTodo(formData) {
 
 // ----------------------------------------------------------
 
+export async function actionResetDatabase(prevState, formData) {
+    // mutate data
+    await Database.reset();
+
+    revalidatePath(`/list`)
+}
+
 export async function actionNewTodo(prevState, formData) {
     const title = formData.get("title");
 
@@ -55,6 +62,7 @@ export async function actionUpdateTodo(prevState, formData) {
         revalidatePath(`/isr/${id}`)
         revalidatePath(`/ssr/${id}`)
     }
+    revalidatePath(`/list`)
 }
 
 export async function actionDeleteTodo(prevState, formData) {

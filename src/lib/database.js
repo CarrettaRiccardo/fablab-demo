@@ -8,6 +8,13 @@ export const Database = {
         return (await dbService()).setConfig(payload);
     },
     // ----------------------------------------------------------
+    reset: async function () {
+        const data = await dbService();
+
+        console.log("Reset database")
+        return data.reset();
+    },
+    
     get: async function (id) {
         const data = await dbService();
 

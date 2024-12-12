@@ -1,4 +1,10 @@
 
+const initialData = [
+    { id: 1, title: 'Carote' },
+    { id: 2, title: 'Insalata' },
+    { id: 3, title: 'Pasta' },
+];
+
 export const dbService = async () => {
     // config in fake db
     if (!global.config) {
@@ -19,11 +25,7 @@ export const dbService = async () => {
     // data in fake db
     if (!global.data) {
         // save data instance in global object for reuse
-        global.data = [
-            { id: 1, title: 'Carote' },
-            { id: 2, title: 'Insalata' },
-            { id: 3, title: 'Pasta' },
-        ];
+        global.data = [...initialData];
     }
     const data = await new Promise((resolve) => {
         // fake retrieval time
@@ -31,6 +33,10 @@ export const dbService = async () => {
             resolve(global.data);
         }, 500);
     });
+
+    function reset() {
+        global.data = [...initialData];
+    }
 
     function get(id) {
         return data.find(item => item.id == id);
@@ -69,6 +75,7 @@ export const dbService = async () => {
     return {
         getConfig,
         setConfig,
+        reset,
         get,
         list,
         update,

@@ -2,6 +2,7 @@ import ButtonDelete from "@/components/button-delete";
 import CenterScreen from "@/components/center-screen";
 import FormConfig from "@/components/form-config";
 import FormNew from "@/components/form-new";
+import FormReset from "@/components/form-reset";
 import FormUpdate from "@/components/form-update";
 import { Database } from "@/lib/database";
 import Link from "next/link";
@@ -61,8 +62,10 @@ export default async function Page() {
             </div>
           </div>
         ))}
-        <div className="p-4 border rounded-lg shadow-lg bg-white mt-4 w-full">
+        <div className="p-4 border rounded-lg shadow-lg bg-white mt-4 w-full flex flex-row gap-2">
           <FormNew />
+
+          <FormReset />
         </div>
       </div>
     </CenterScreen>
